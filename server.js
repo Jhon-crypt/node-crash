@@ -1,33 +1,34 @@
 import http from 'http'
-
+import fs from 'fs/promises'
+import url from 'url'
+import path from 'path'
 const PORT = process.env.PORT
 
-const server = http.createServer((req, res) => {
+//get file path
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
+const server = http.createServer(async(req, res) => {
 
     try {
-        //Request method check
-        if (req.method === GET) {
-
+        //Request method 
+        if (req.method === 'GET') {
+            let filePath;
             if (req.url === "/") {
 
-                res.writeHead(200, { 'content-Type': 'text/html' })
-                res.end('<h1>Home Page</h1>');
+                filePath = path.join(__dirname, 'public', 'index.html')
 
             } else if (req.url === "/about") {
 
-                res.writeHead(200, { 'content-Type': 'text/html' })
-                res.end('<h1>About Page</h1>')
+                filePath = path.join(__dirname, 'public', 'about.html')
 
-            } else if (req.url === "/contact") {
-
-                res.writeHead(200, { 'content-Type': 'text/html' })
-                res.end('<h1>Contact Page</h1>')
-
-            } else {
-                res.writeHead(404, { 'content-Type': 'text/html' })
-                res.end('<h1>Not Found  </h1>')
+            }else {
+                throw new Error("Not found")
             }
 
+            const data = await fs.readFile(filePath)
+            res.setHeader('Content-Type', 'text/html')
+            res.write(data)
+            res.end()
         } else {
 
             throw new Error("Method not allowed")
@@ -35,8 +36,8 @@ const server = http.createServer((req, res) => {
         }
 
     } catch (error) {
-        res.writeHead(500, { 'content-Type': 'text/html' })
-        res.end('Server Error')
+        throw new Error(error)
+
     }
     //console.log("This is the request URL:",req.url)
     //console.log("This is the request Method:",req.method)
@@ -46,7 +47,6 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
-
 
 /*
    res.setHeader('Content-Type', 'text/html');
