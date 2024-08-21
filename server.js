@@ -4,7 +4,7 @@ import url from 'url'
 import path from 'path'
 const PORT = process.env.PORT
 
-//get file path
+//file path
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
 const server = http.createServer(async(req, res) => {
