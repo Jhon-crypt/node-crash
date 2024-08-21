@@ -41,9 +41,7 @@ const server = http.createServer(async(req, res) => {
         throw new Error(error)
 
     }
-    //console.log("This is the request URL:",req.url)
-    //console.log("This is the request Method:",req.method)
-
+    
 });
 
 server.listen(PORT, () => {
