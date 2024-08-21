@@ -58,5 +58,3 @@ server.listen(PORT, () => {
 res.writeHead(200, { 'content-Type': 'text/json' })
 res.end(JSON.stringify({ message: 'Success' }))
 */
-
-//Manual Router
