@@ -10,7 +10,6 @@ const PORT = process.env.PORT
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
 const server = http.createServer(async(req, res) => {
-
     try {
         //Request method 
         if (req.method === 'GET') {
